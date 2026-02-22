@@ -27,9 +27,9 @@ const AdminDashboard = () => {
     }
   };
 
-  const handleResolve = async (id) => {
+  const handleResolve = async (id, action) => {
     try {
-      await transactionService.resolveFraudLog(id, 'Reviewed and resolved');
+      await transactionService.resolveFraudLog(id, 'Reviewed and resolved', action);
       loadData();
     } catch (err) {
       console.error(err);
@@ -54,7 +54,7 @@ const AdminDashboard = () => {
                 <div className="mt-2 text-3xl font-semibold text-gray-900">{statistics.totalTransactions}</div>
               </div>
               <div className="bg-white p-6 rounded-lg shadow">
-                <div className="text-sm font-medium text-gray-500">Pending Transactions</div>
+                <div className="text-sm font-medium text-gray-500">Pending Review</div>
                 <div className="mt-2 text-3xl font-semibold text-gray-900">{statistics.pendingTransactions}</div>
               </div>
               <div className="bg-white p-6 rounded-lg shadow">
@@ -100,7 +100,7 @@ const AdminDashboard = () => {
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Rule</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Risk</th>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Resolve</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -122,12 +122,20 @@ const AdminDashboard = () => {
                           <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{log.actionTaken}</td>
                           <td className="px-6 py-4 whitespace-nowrap text-sm">
                             {!log.resolved ? (
-                              <button
-                                onClick={() => handleResolve(log.id)}
-                                className="text-gray-600 hover:text-gray-900"
-                              >
-                                Resolve
-                              </button>
+                              <div className="flex gap-2">
+                                <button
+                                  onClick={() => handleResolve(log.id, 'approve')}
+                                  className="px-3 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700"
+                                >
+                                  Approve
+                                </button>
+                                <button
+                                  onClick={() => handleResolve(log.id, 'reject')}
+                                  className="px-3 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700"
+                                >
+                                  Reject
+                                </button>
+                              </div>
                             ) : (
                               <span className="text-green-600">Resolved</span>
                             )}

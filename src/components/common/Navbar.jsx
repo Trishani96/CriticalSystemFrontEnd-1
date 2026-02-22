@@ -24,6 +24,9 @@ const Navbar = () => {
           </div>
           <div className="flex items-center space-x-4">
             <span className="text-sm text-gray-700">{user.email}</span>
+            <Link to="/simulator" className="text-sm text-gray-600 hover:text-gray-900 font-medium">
+              Fraud Lab
+            </Link>
             {isAdmin && (
               <Link to="/admin" className="text-sm text-gray-600 hover:text-gray-900">
                 Admin Panel

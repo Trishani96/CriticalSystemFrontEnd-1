@@ -32,8 +32,8 @@ export const transactionService = {
     return response.data;
   },
 
-  resolveFraudLog: async (id, notes) => {
-    const response = await api.post(`/admin/fraud-logs/${id}/resolve`, { notes });
+  resolveFraudLog: async (id, notes, action) => {
+    const response = await api.post(`/admin/fraud-logs/${id}/resolve`, { notes, action });
     return response.data;
   },
 
